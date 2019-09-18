@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_vesync-power-monitor/templates *
+recursive-include octoprint_vesync-power-monitor/translations *
+recursive-include octoprint_vesync-power-monitor/static *

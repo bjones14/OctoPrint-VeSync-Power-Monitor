@@ -5,14 +5,21 @@
  * License: AGPLv3
  */
 $(function() {
-    function Vesync-power-monitorViewModel(parameters) {
+    function VeSyncPowerMonitorViewModel(parameters) {
         var self = this;
 
-        // assign the injected parameters, e.g.:
-        // self.loginStateViewModel = parameters[0];
-        // self.settingsViewModel = parameters[1];
+        self.vesyncData = ko.observable(null);
 
         // TODO: Implement your plugin's view model here.
+
+        self.onDataUpdaterPluginMessage = function(plugin, data) {
+            if (plugin != "vesync_power_monitor") {
+                return;
+            }
+            else {
+                self.vesyncData(_.sprintf("%s: %.4f", data.name, data.value));
+            }
+        };
     }
 
     /* view model class, parameters for constructor, container to bind to
@@ -20,10 +27,8 @@ $(function() {
      * and a full list of the available options.
      */
     OCTOPRINT_VIEWMODELS.push({
-        construct: Vesync-power-monitorViewModel,
-        // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
-        dependencies: [ /* "loginStateViewModel", "settingsViewModel" */ ],
-        // Elements to bind to, e.g. #settings_plugin_vesync-power-monitor, #tab_plugin_vesync-power-monitor, ...
-        elements: [ /* ... */ ]
+        construct: VeSyncPowerMonitorViewModel,
+        dependencies: [],
+        elements: [ "#vesync-data-display" ]
     });
 });
